@@ -40,7 +40,8 @@ public class TransactionController {
     public String depositForm(@PathVariable Long accountId, Model model, Authentication authentication) {
         User currentUser = getCurrentUser(authentication);
         Account account = accountService.findById(accountId).orElseThrow();
-        if (!account.getUser().equals(currentUser)) return "error";
+        if (!account.getUser().equals(currentUser))
+            return "error";
         model.addAttribute("account", account);
         return "transaction-deposit";
     }
@@ -55,7 +56,8 @@ public class TransactionController {
     public String withdrawForm(@PathVariable Long accountId, Model model, Authentication authentication) {
         User currentUser = getCurrentUser(authentication);
         Account account = accountService.findById(accountId).orElseThrow();
-        if (!account.getUser().equals(currentUser)) return "error";
+        if (!account.getUser().equals(currentUser))
+            return "error";
         model.addAttribute("account", account);
         return "transaction-withdraw";
     }
@@ -70,14 +72,17 @@ public class TransactionController {
     public String transferForm(@PathVariable Long fromAccountId, Model model, Authentication authentication) {
         User currentUser = getCurrentUser(authentication);
         Account fromAccount = accountService.findById(fromAccountId).orElseThrow();
-        if (!fromAccount.getUser().equals(currentUser)) return "error";
+        if (!fromAccount.getUser().equals(currentUser))
+            return "error";
         model.addAttribute("fromAccount", fromAccount);
         return "transaction-transfer";
     }
 
     @PostMapping("/transfer/initiate")
-    public String initiateTransfer(@RequestParam Long fromAccountId, @RequestParam String toAccountNumber, @RequestParam double amount) {
-        Account toAccount = accountService.findByAccountNumber(toAccountNumber).orElseThrow(() -> new RuntimeException("To account not found"));
+    public String initiateTransfer(@RequestParam Long fromAccountId, @RequestParam String toAccountNumber,
+            @RequestParam double amount) {
+        Account toAccount = accountService.findByAccountNumber(toAccountNumber)
+                .orElseThrow(() -> new RuntimeException("To account not found"));
         String otp = String.format("%06d", (int) (Math.random() * 1000000));
         session.setAttribute("transferOtp", otp);
         session.setAttribute("transferFromId", fromAccountId);
@@ -114,7 +119,12 @@ public class TransactionController {
     public String history(Model model, Authentication authentication) {
         User currentUser = getCurrentUser(authentication);
         List<Account> accounts = accountService.findByUser(currentUser);
-        if (accounts.isEmpty()) return "error";
+        if (accounts.isEmpty()) {
+            // If user has no accounts, show empty transaction list with a message
+            model.addAttribute("transactions", List.of());
+            model.addAttribute("noAccountsMessage", "You don't have any accounts yet. Please create an account first.");
+            return "transaction-history";
+        }
         Account account = accounts.get(0); // Assume one account per user
         List<Transaction> transactions = transactionService.getTransactionsForAccount(account);
         model.addAttribute("transactions", transactions);
@@ -125,7 +135,8 @@ public class TransactionController {
     public ResponseEntity<String> exportCsv(Authentication authentication) {
         User currentUser = getCurrentUser(authentication);
         List<Account> accounts = accountService.findByUser(currentUser);
-        if (accounts.isEmpty()) throw new RuntimeException("No account found");
+        if (accounts.isEmpty())
+            throw new RuntimeException("No account found");
         Account account = accounts.get(0);
         List<Transaction> transactions = transactionService.getTransactionsForAccount(account);
         String csv = transactionService.exportToCSV(transactions);
@@ -138,7 +149,8 @@ public class TransactionController {
     @GetMapping("/reverse/{id}")
     public String reverse(@PathVariable Long id, Authentication authentication) {
         User currentUser = getCurrentUser(authentication);
-        if (currentUser.getRole() != Role.ADMIN) return "error";
+        if (currentUser.getRole() != Role.ADMIN)
+            return "error";
         transactionService.reverseTransaction(id);
         return "redirect:/transaction/history";
     }

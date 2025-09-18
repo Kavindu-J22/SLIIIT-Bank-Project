@@ -1,21 +1,31 @@
 <!-- src/main/resources/templates/transaction-history.html -->
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" th:include="layout :: layout">
-<head>
-    <title>SLIIT Bank - Transaction History</title>
-</head>
-<body>
-    <div th:fragment="content">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      th:replace="layout :: layout(~{::section})">
+
+<section>
         <h2 class="text-xl font-bold mb-4 text-blue-600">Transaction History</h2>
-        <a href="/transaction/export/csv" class="bg-green-500 text-white p-2 rounded mb-4 inline-block hover:bg-green-600">Export to CSV</a>
-        <table class="w-full border-collapse border border-gray-300">
+
+        <!-- Show message if user has no accounts -->
+        <div th:if="${noAccountsMessage}" class="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded mb-4">
+            <p th:text="${noAccountsMessage}"></p>
+            <a href="/account/create" class="bg-blue-500 text-white p-2 rounded mt-2 inline-block hover:bg-blue-600">Create Account</a>
+        </div>
+
+        <!-- Show export button and table only if there are transactions -->
+        <div th:if="${!transactions.empty}">
+            <a href="/transaction/export/csv" class="bg-green-500 text-white p-2 rounded mb-4 inline-block hover:bg-green-600">Export to CSV</a>
+        </div>
+
+        <table class="w-full border-collapse border border-gray-300" th:if="${!transactions.empty}">
             <thead>
                 <tr class="bg-gray-200">
                     <th class="p-2">Amount</th>
                     <th class="p-2">Type</th>
                     <th class="p-2">Date</th>
                     <th class="p-2">Description</th>
-                    <th class="p-2" th:if="${#authorization.expression('hasRole(''ADMIN'')')}">Actions</th>
+                    <th class="p-2" sec:authorize="hasRole('ADMIN')">Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -24,12 +34,10 @@
                     <td class="p-2" th:text="${transaction.type}"></td>
                     <td class="p-2" th:text="${transaction.date}"></td>
                     <td class="p-2" th:text="${transaction.description}"></td>
-                    <td class="p-2" th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+                    <td class="p-2" sec:authorize="hasRole('ADMIN')">
                         <a th:href="@{/transaction/reverse/{id}(id=${transaction.id})}" class="text-red-500 hover:underline" onclick="return confirm('Are you sure?')">Reverse</a>
                     </td>
                 </tr>
             </tbody>
         </table>
-    </div>
-</body>
-</html>
+</section>

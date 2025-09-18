@@ -56,7 +56,7 @@ public class DashboardController {
             model.addAttribute("transactionCount", transactionRepository.count());
             model.addAttribute("loanCount", loanRepository.count());
             model.addAttribute("feedbackCount", feedbackRepository.count());
-            return "Customer-dashboard";
+            return "customer-dashboard";
         } else if (role == Role.STAFF) {
             return "staff-dashboard";
         } else {

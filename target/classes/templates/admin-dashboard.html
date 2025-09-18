@@ -1,9 +1,8 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout :: layout}">
-<head>
-    <title>SLIIT Bank - Admin Dashboard</title>
-</head>
-<body>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="layout :: layout(~{::section})">
+
+<section>
 <div th:fragment="content">
     <h2 class="text-xl font-bold mb-4 text-blue-600">Admin Dashboard</h2>
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -28,6 +27,4 @@
             <p class="text-2xl" th:text="${feedbackCount}">0</p>
         </div>
     </div>
-</div>
-</body>
-</html>
+</section>

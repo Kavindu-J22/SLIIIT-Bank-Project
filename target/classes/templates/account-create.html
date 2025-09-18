@@ -1,11 +1,9 @@
 <!-- src/main/resources/templates/account-create.html -->
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" th:include="layout :: layout">
-<head>
-    <title>SLIIT Bank - Create Account</title>
-</head>
-<body>
-    <div th:fragment="content">
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="layout :: layout(~{::section})">
+
+<section>
         <h2 class="text-xl font-bold mb-4 text-blue-600">Create New Account</h2>
         <form th:action="@{/account/create}" method="post" th:object="${account}">
             <div class="mb-4">
@@ -36,6 +34,4 @@
             </div>
             <button type="submit" class="bg-blue-500 text-white p-2 rounded hover:bg-blue-600">Create</button>
         </form>
-    </div>
-</body>
-</html>
+</section>

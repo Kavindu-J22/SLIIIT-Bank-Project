@@ -1,11 +1,9 @@
 <!-- src/main/resources/templates/account-list.html -->
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" th:include="layout :: layout">
-<head>
-    <title>SLIIT Bank - Accounts</title>
-</head>
-<body>
-    <div th:fragment="content">
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="layout :: layout(~{::section})">
+
+<section>
         <h2 class="text-xl font-bold mb-4 text-blue-600">Account List</h2>
         <a href="/account/create" class="bg-green-500 text-white p-2 rounded mb-4 inline-block hover:bg-green-600">Create New Account</a>
         <table class="w-full border-collapse border border-gray-300">
@@ -32,6 +30,4 @@
                 </tr>
             </tbody>
         </table>
-    </div>
-</body>
-</html>
+</section>

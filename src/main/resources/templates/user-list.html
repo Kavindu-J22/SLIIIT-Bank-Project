@@ -1,11 +1,9 @@
 <!-- src/main/resources/templates/user-list.html -->
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" th:include="layout :: layout">
-<head>
-    <title>SLIIT Bank - Users</title>
-</head>
-<body>
-    <div th:fragment="content">
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="layout :: layout(~{::section})">
+
+<section>
         <h2 class="text-xl font-bold mb-4 text-blue-600">User List</h2>
         <form th:action="@{/admin/user/list}" method="get" class="mb-4">
             <input type="text" name="search" placeholder="Search by username" class="p-2 border border-gray-300 rounded">
@@ -32,5 +30,4 @@
             </tbody>
         </table>
     </div>
-</body>
-</html>
+</section>

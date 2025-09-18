@@ -1,13 +1,12 @@
 <!-- src/main/resources/templates/feedback-list.html -->
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" th:include="layout :: layout">
-<head>
-    <title>SLIIT Bank - Feedback</title>
-</head>
-<body>
-    <div th:fragment="content">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      th:replace="layout :: layout(~{::section})">
+
+<section>
         <h2 class="text-xl font-bold mb-4 text-blue-600">Feedback List</h2>
-        <a href="/feedback/submit" class="bg-green-500 text-white p-2 rounded mb-4 inline-block hover:bg-green-600" th:if="${#authorization.expression('hasRole(''CUSTOMER'')')}">Submit Feedback</a>
+        <a href="/feedback/submit" class="bg-green-500 text-white p-2 rounded mb-4 inline-block hover:bg-green-600" sec:authorize="hasRole('CUSTOMER')">Submit Feedback</a>
         <table class="w-full border-collapse border border-gray-300">
             <thead>
                 <tr class="bg-gray-200">
@@ -27,6 +26,4 @@
                 </tr>
             </tbody>
         </table>
-    </div>
-</body>
-</html>
+</section>

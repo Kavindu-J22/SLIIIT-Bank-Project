@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" th:fragment="layout(content)">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      th:fragment="layout(content)">
 <head>
     <title>SLIIT Bank</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
@@ -10,22 +12,24 @@
         <h1 class="text-2xl font-bold">SLIIT Bank</h1>
         <nav>
             <a href="/dashboard" class="mx-2 hover:underline">Dashboard</a>
-            <span th:if="${#authorization.expression('hasRole(''CUSTOMER'') or hasRole(''ADMIN'')')}">
+            <span sec:authorize="hasRole('CUSTOMER') or hasRole('ADMIN')">
                 <a href="/account/list" class="mx-2 hover:underline">Accounts</a>
             </span>
-            <span th:if="${#authorization.expression('hasRole(''CUSTOMER'') or hasRole(''ADMIN'')')}">
+            <span sec:authorize="hasRole('CUSTOMER') or hasRole('ADMIN')">
                 <a href="/transaction/history" class="mx-2 hover:underline">Transactions</a>
             </span>
-            <span th:if="${#authorization.expression('hasAnyRole(''CUSTOMER'', ''STAFF'', ''ADMIN'')')}">
+            <span sec:authorize="hasAnyRole('CUSTOMER', 'STAFF', 'ADMIN')">
                 <a href="/loan/list" class="mx-2 hover:underline">Loans</a>
             </span>
-            <span th:if="${#authorization.expression('hasAnyRole(''CUSTOMER'', ''STAFF'', ''ADMIN'')')}">
+            <span sec:authorize="hasAnyRole('CUSTOMER', 'STAFF', 'ADMIN')">
                 <a href="/feedback/list" class="mx-2 hover:underline">Feedback</a>
             </span>
-            <span th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+            <span sec:authorize="hasRole('ADMIN')">
                 <a href="/admin/user/list" class="mx-2 hover:underline">Users</a>
             </span>
-            <a href="/logout" class="mx-2 hover:underline">Logout</a>
+            <form th:action="@{/logout}" method="post" style="display: inline;">
+                <button type="submit" class="mx-2 hover:underline bg-transparent border-none text-white cursor-pointer">Logout</button>
+            </form>
         </nav>
     </div>
 </header>

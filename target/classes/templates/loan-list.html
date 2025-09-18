@@ -1,13 +1,12 @@
 <!-- src/main/resources/templates/loan-list.html -->
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" th:include="layout :: layout">
-<head>
-    <title>SLIIT Bank - Loans</title>
-</head>
-<body>
-    <div th:fragment="content">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      th:replace="layout :: layout(~{::section})">
+
+<section>
         <h2 class="text-xl font-bold mb-4 text-blue-600">Loan List</h2>
-        <a href="/loan/apply" class="bg-green-500 text-white p-2 rounded mb-4 inline-block hover:bg-green-600" th:if="${#authorization.expression('hasRole(''CUSTOMER'')')}">Apply for Loan</a>
+        <a href="/loan/apply" class="bg-green-500 text-white p-2 rounded mb-4 inline-block hover:bg-green-600" sec:authorize="hasRole('CUSTOMER')">Apply for Loan</a>
         <table class="w-full border-collapse border border-gray-300">
             <thead>
                 <tr class="bg-gray-200">
@@ -34,5 +33,4 @@
             </tbody>
         </table>
     </div>
-</body>
-</html>
+</section>
