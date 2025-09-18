@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="layout :: layout(~{::section})">
+
+<section>
+    <h2 class="text-xl font-bold mb-4 text-blue-600">Customer Dashboard</h2>
+    <p class="mb-4">Welcome, Customer! Manage your accounts and more.</p>
+
+    <a href="/account/list" class="bg-blue-500 text-white p-2 rounded hover:bg-blue-600">View Accounts</a>
+    <a href="/transaction/history" class="bg-blue-500 text-white p-2 rounded mx-2 hover:bg-blue-600">View Transactions</a>
+    <a href="/loan/list" class="bg-blue-500 text-white p-2 rounded mx-2 hover:bg-blue-600">View Loans</a>
+    <a href="/feedback/list" class="bg-blue-500 text-white p-2 rounded mx-2 hover:bg-blue-600">View Feedback</a>
+</section>
+</html>

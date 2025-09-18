@@ -1,0 +1,30 @@
+<!-- src/main/resources/templates/loan-apply.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:include="layout :: layout">
+<head>
+    <title>SLIIT Bank - Apply Loan</title>
+</head>
+<body>
+    <div th:fragment="content">
+        <h2 class="text-xl font-bold mb-4 text-blue-600">Apply for Loan</h2>
+        <form th:action="@{/loan/apply}" method="post" th:object="${loan}">
+            <div class="mb-4">
+                <label for="loanType" class="block text-gray-700">Loan Type</label>
+                <input type="text" id="loanType" th:field="*{loanType}" class="w-full p-2 border border-gray-300 rounded">
+                <span th:if="${#fields.hasErrors('loanType')}" th:errors="*{loanType}" class="text-red-500"></span>
+            </div>
+            <div class="mb-4">
+                <label for="amount" class="block text-gray-700">Amount</label>
+                <input type="number" id="amount" th:field="*{amount}" class="w-full p-2 border border-gray-300 rounded">
+                <span th:if="${#fields.hasErrors('amount')}" th:errors="*{amount}" class="text-red-500"></span>
+            </div>
+            <div class="mb-4">
+                <label for="duration" class="block text-gray-700">Duration (months)</label>
+                <input type="number" id="duration" th:field="*{duration}" class="w-full p-2 border border-gray-300 rounded">
+                <span th:if="${#fields.hasErrors('duration')}" th:errors="*{duration}" class="text-red-500"></span>
+            </div>
+            <button type="submit" class="bg-blue-500 text-white p-2 rounded hover:bg-blue-600">Apply</button>
+        </form>
+    </div>
+</body>
+</html>

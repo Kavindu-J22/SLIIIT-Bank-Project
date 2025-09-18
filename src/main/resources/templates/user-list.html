@@ -1,0 +1,36 @@
+<!-- src/main/resources/templates/user-list.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:include="layout :: layout">
+<head>
+    <title>SLIIT Bank - Users</title>
+</head>
+<body>
+    <div th:fragment="content">
+        <h2 class="text-xl font-bold mb-4 text-blue-600">User List</h2>
+        <form th:action="@{/admin/user/list}" method="get" class="mb-4">
+            <input type="text" name="search" placeholder="Search by username" class="p-2 border border-gray-300 rounded">
+            <button type="submit" class="bg-blue-500 text-white p-2 rounded hover:bg-blue-600">Search</button>
+        </form>
+        <a href="/admin/user/create" class="bg-green-500 text-white p-2 rounded mb-4 inline-block hover:bg-green-600">Create New User</a>
+        <table class="w-full border-collapse border border-gray-300">
+            <thead>
+                <tr class="bg-gray-200">
+                    <th class="p-2">Username</th>
+                    <th class="p-2">Role</th>
+                    <th class="p-2">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="user : ${users}" class="hover:bg-gray-100">
+                    <td class="p-2" th:text="${user.username}"></td>
+                    <td class="p-2" th:text="${user.role}"></td>
+                    <td class="p-2">
+                        <a th:href="@{/admin/user/edit/{id}(id=${user.id})}" class="text-yellow-500 hover:underline">Edit</a>
+                        <a th:href="@{/admin/user/delete/{id}(id=${user.id})}" class="text-red-500 hover:underline mx-2" onclick="return confirm('Are you sure?')">Delete</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

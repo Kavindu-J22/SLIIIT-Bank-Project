@@ -1,0 +1,23 @@
+<!-- src/main/resources/templates/account-view.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:include="layout :: layout">
+<head>
+    <title>SLIIT Bank - View Account</title>
+</head>
+<body>
+    <div th:fragment="content">
+        <h2 class="text-xl font-bold mb-4 text-blue-600">Account Details</h2>
+        <div class="bg-white p-4 rounded shadow-md">
+            <p><strong>Account Number:</strong> <span th:text="${account.accountNumber}"></span></p>
+            <p><strong>Type:</strong> <span th:text="${account.accountType}"></span></p>
+            <p><strong>Balance:</strong> <span th:text="${account.balance}"></span></p>
+            <p><strong>Full Name:</strong> <span th:text="${account.fullName}"></span></p>
+            <p><strong>Date of Birth:</strong> <span th:text="${account.dateOfBirth}"></span></p>
+            <p><strong>Address:</strong> <span th:text="${account.address}"></span></p>
+        </div>
+        <a href="/transaction/deposit/${account.id}" class="bg-green-500 text-white p-2 rounded mt-4 inline-block hover:bg-green-600">Deposit</a>
+        <a href="/transaction/withdraw/${account.id}" class="bg-yellow-500 text-white p-2 rounded mt-4 inline-block mx-2 hover:bg-yellow-600">Withdraw</a>
+        <a href="/transaction/transfer/${account.id}" class="bg-blue-500 text-white p-2 rounded mt-4 inline-block hover:bg-blue-600">Transfer</a>
+    </div>
+</body>
+</html>

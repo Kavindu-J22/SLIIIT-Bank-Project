@@ -1,0 +1,32 @@
+<!-- src/main/resources/templates/feedback-list.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:include="layout :: layout">
+<head>
+    <title>SLIIT Bank - Feedback</title>
+</head>
+<body>
+    <div th:fragment="content">
+        <h2 class="text-xl font-bold mb-4 text-blue-600">Feedback List</h2>
+        <a href="/feedback/submit" class="bg-green-500 text-white p-2 rounded mb-4 inline-block hover:bg-green-600" th:if="${#authorization.expression('hasRole(''CUSTOMER'')')}">Submit Feedback</a>
+        <table class="w-full border-collapse border border-gray-300">
+            <thead>
+                <tr class="bg-gray-200">
+                    <th class="p-2">Subject</th>
+                    <th class="p-2">Status</th>
+                    <th class="p-2">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="feedback : ${feedbacks}" class="hover:bg-gray-100">
+                    <td class="p-2" th:text="${feedback.subject}"></td>
+                    <td class="p-2" th:text="${feedback.status}"></td>
+                    <td class="p-2">
+                        <a th:href="@{/feedback/update/{id}(id=${feedback.id})}" class="text-yellow-500 hover:underline" th:if="${#authorization.expression('hasAnyRole(''STAFF'', ''ADMIN'')')}">Update</a>
+                        <a th:href="@{/feedback/delete/{id}(id=${feedback.id})}" class="text-red-500 hover:underline mx-2" th:if="${#authorization.expression('hasRole(''ADMIN'')')}" onclick="return confirm('Are you sure?')">Delete</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

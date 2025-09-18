@@ -1,0 +1,24 @@
+<!-- src/main/resources/templates/transaction-transfer.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:include="layout :: layout">
+<head>
+    <title>SLIIT Bank - Transfer</title>
+</head>
+<body>
+    <div th:fragment="content">
+        <h2 class="text-xl font-bold mb-4 text-blue-600">Transfer</h2>
+        <form th:action="@{/transaction/transfer/initiate}" method="post">
+            <input type="hidden" name="fromAccountId" th:value="${fromAccount.id}">
+            <div class="mb-4">
+                <label for="toAccountNumber" class="block text-gray-700">To Account Number</label>
+                <input type="text" id="toAccountNumber" name="toAccountNumber" class="w-full p-2 border border-gray-300 rounded">
+            </div>
+            <div class="mb-4">
+                <label for="amount" class="block text-gray-700">Amount</label>
+                <input type="number" id="amount" name="amount" class="w-full p-2 border border-gray-300 rounded" min="0" step="0.01">
+            </div>
+            <button type="submit" class="bg-blue-500 text-white p-2 rounded hover:bg-blue-600">Initiate Transfer</button>
+        </form>
+    </div>
+</body>
+</html>

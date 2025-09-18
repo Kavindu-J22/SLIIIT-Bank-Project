@@ -1,0 +1,31 @@
+<!-- src/main/resources/templates/feedback-update.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:include="layout :: layout">
+<head>
+    <title>SLIIT Bank - Update Feedback</title>
+</head>
+<body>
+    <div th:fragment="content">
+        <h2 class="text-xl font-bold mb-4 text-blue-600">Update Feedback</h2>
+        <div class="bg-white p-4 rounded shadow-md mb-4">
+            <p><strong>Subject:</strong> <span th:text="${feedback.subject}"></span></p>
+            <p><strong>Message:</strong> <span th:text="${feedback.message}"></span></p>
+            <p><strong>Status:</strong> <span th:text="${feedback.status}"></span></p>
+            <p><strong>Reply:</strong> <span th:text="${feedback.reply}"></span></p>
+        </div>
+        <form th:action="@{/feedback/update/{id}(id=${feedback.id})}" method="post">
+            <div class="mb-4">
+                <label for="reply" class="block text-gray-700">Reply</label>
+                <textarea id="reply" name="reply" class="w-full p-2 border border-gray-300 rounded" rows="5"></textarea>
+            </div>
+            <div class="mb-4">
+                <label for="status" class="block text-gray-700">Status</label>
+                <select id="status" name="status" class="w-full p-2 border border-gray-300 rounded">
+                    <option th:each="status : ${statuses}" th:value="${status}" th:text="${status}"></option>
+                </select>
+            </div>
+            <button type="submit" class="bg-blue-500 text-white p-2 rounded hover:bg-blue-600">Update</button>
+        </form>
+    </div>
+</body>
+</html>
